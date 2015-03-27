@@ -41,6 +41,16 @@ static int list_max = 0;
 static int first = 0;
 static char *home_path = NULL;
 
+static __thread int reentry = 0;
+LOCAL void set_reentry(int f)
+{
+	reentry = f;
+}
+LOCAL int get_reentry()
+{
+	return reentry;
+}
+
 
 LOCAL int fakechroot_debug (const char *fmt, ...)
 {

@@ -95,7 +95,7 @@
 
 #define expand_chroot_path(path, fakechroot_path, fakechroot_buf) \
     { \
-        if (!fakechroot_localdir(path)) { \
+        if (!get_reentry() && !fakechroot_localdir(path)) { \
             if ((path) != NULL && *((char *)(path)) == '/') { \
                 fakechroot_path = getenv("FAKECHROOT_BASE"); \
                 if (fakechroot_path != NULL) { \
@@ -187,3 +187,6 @@ struct fakechroot_wrapper {
 int fakechroot_debug (const char *, ...);
 fakechroot_wrapperfn_t fakechroot_loadfunc (struct fakechroot_wrapper *);
 int fakechroot_localdir (const char *);
+
+void set_reentry(int);
+int get_reentry();

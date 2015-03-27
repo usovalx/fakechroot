@@ -33,7 +33,9 @@ wrapper(glob, int, (const char * pattern, int flags, int (* errfunc) (const char
     debug("glob(\"%s\", %d, &errfunc, &pglob)", pattern, flags);
     expand_chroot_path(pattern, fakechroot_path, fakechroot_buf);
 
+    set_reentry(1);
     rc = nextcall(glob)(pattern, flags, errfunc, pglob);
+    set_reentry(0);
     if (rc < 0)
         return rc;
 
